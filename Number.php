@@ -227,7 +227,7 @@ class Number
 		$valueSplit = explode(".", $this->value);
 		$value = $valueSplit[0];
 		if ($valueSplit[1]) {
-			$value .= ".".rtrim($valueSplit[1], "0");
+			$value .= ".".rtrim($valueSplit[1], ".0");
 		}
 		return $value;
 	}
