@@ -25,7 +25,7 @@ service php7.2-fpm reload
 ```
 
 ## Usage
-```
+```php
 use shtse8/Number;
 $var = new Number("1.8573958822565E+17");
 $var += 111;
