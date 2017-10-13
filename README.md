@@ -11,6 +11,8 @@ composer require shtse8/Number
 ```shell
 apt install php7.2-bcmath
 ```
+
+### Optional 
 2. [PECL-Operator](https://github.com/php/pecl-php-operator)
 ```shell
 git clone https://github.com/php/pecl-php-operator
