@@ -1,9 +1,8 @@
 <?php
-
 class Number
 {
 	protected $internalScale = 20;
-    protected $iterations = 100;
+	protected $iterations = 100;
 	
 	protected $value = 0;
 	protected $humanUnits = [
@@ -12,10 +11,10 @@ class Number
 		9 => 'G', 
 		12 => 'T', 
 		15 => 'P', 
-	'E'
+		18 => 'E'
 	];
 	
-	public function __construct($value)
+	public function __construct($value = "0")
 	{
 		bcscale($this->internalScale);
 		
@@ -82,21 +81,21 @@ class Number
 	public function ln()
 	{
 		$retval = new self(0);
-        for ($i = 0; $i < $this->iterations; $i++) {
+		for ($i = 0; $i < $this->iterations; $i++) {
 			$pow = (new self(2))->mul($i)->add(1);
 			$mul = (new self(1))->div($pow);
 			$base = $this->sub(1)->div($this->add(1));
 			$fraction = $base->pow($pow)->mul($mul);
 			$retval = $retval->add($fraction);
-        }
-        return $retval->mul(2);
+		}
+		return $retval->mul(2);
 	}
 		
-    /**
-     *  Gives the base 10 logarithm of the argument (uses ln $val/ln 10).
-     *
-     * @return string|integer|float
-     */
+	/**
+	 *  Gives the base 10 logarithm of the argument (uses ln $val/ln 10).
+	 *
+	 * @return string|integer|float
+	 */
 	public function log($base)
 	{
 		$baseLn = (new self($base))->ln();
@@ -124,57 +123,91 @@ class Number
 		return new self($newValue);
 	}
 	
-	public function abs()
+	public function abs(): self
 	{
 		return new self(ltrim($this->value, "-"));
 	}
 	
-	public function isEqual($arg)
+	public function getInteger(): self
+	{
+		return $this->truncate();
+	}
+	
+	public function getDecimal(): self
+	{
+		list($integerStr, $decimalStr) = explode(".", $this->toString());
+		return new self("0." . $decimalStr);
+	}
+	
+	public function isEqual($arg): bool
 	{
 		$arg = $this->normalizeFloat($arg);
 		return bccomp($this->value, $arg) == 0;
 	}
 	
-	public function isSmaller($arg)
+	public function isSmaller($arg): bool
 	{
 		$arg = $this->normalizeFloat($arg);
 		return bccomp($this->value, $arg) == -1;
 	}
 	
-	public function isSmallerOrEqual($arg)
+	public function isSmallerOrEqual($arg): bool
 	{
 		return $this->isSmaller($arg) || $this->isEqual($arg);
 	}
 	
-	public function isGreater($arg)
+	public function isGreater($arg): bool
 	{
 		$arg = $this->normalizeFloat($arg);
 		return bccomp($this->value, $arg) == 1;
 	}
 	
-	public function isGreaterOrEqual($arg)
+	public function isGreaterOrEqual($arg): bool
 	{
 		return $this->isGreater($arg) || $this->isEqual($arg);
 	}
 	
-	public function isNegative()
+	public function isNegative(): bool
 	{
 		return $this->isSmaller(0);
 	}
 	
-	public function isPositive()
+	public function isPositive(): bool
 	{
 		return $this->isGreater(0);
 	}
 	
-	public function inc()
+	public function inc(): self
 	{
 		return $this->add(1);
 	}
 	
-	public function dec()
+	public function dec(): self
 	{
 		return $this->sub(1);
+	}
+	
+	public function truncate(int $precision = 0): self
+	{
+		list($integerStr, $decimalStr) = explode(".", $this->toString());
+		$valueStr = $integerStr;
+		if ($decimalStr && $precision > 0) {
+			$decimalStr = substr($decimalStr, 0, $precision);
+			if ($decimalStr) {
+				$valueStr .= '.' . $decimalStr;
+			}
+		}
+		return new self($valueStr);
+	}
+	
+	public function round(int $precision = 0): self
+	{
+		$decimalOffset = '0.' . str_repeat('0', $precision) .'5';
+		if ($this->isNegative()) {
+			return $this->sub($decimalOffset)->truncate($precision);
+		} else {
+			return $this->add($decimalOffset)->truncate($precision);
+		}
 	}
 	
 	public function format($decimals = 0)
@@ -183,17 +216,17 @@ class Number
 		if ($this->isNegative()) {
 			$str = "-";
 		}
-		$valueSplit = explode(".", $this->abs()->toString());
-		$integerLength = strlen($valueSplit[0]);
+		list($integerStr, $decimalStr) = explode(".",$this->round($decimals)->abs()->toString());
+		$integerLength = strlen($integerStr);
 		for ($i=0; $i < $integerLength; $i++) {
-			$str .= $valueSplit[0][$i];
+			$str .= $integerStr[$i];
 			$reverseI = $integerLength - $i - 1;
 			if ($reverseI && $reverseI % 3 == 0) {
 				$str .= ",";
 			}
 		}
-		if ($valueSplit[1]) {
-			$str .= ".".$valueSplit[1];
+		if ($decimals) {
+			$str .= ".".str_pad($decimalStr, $decimals, "0");
 		}
 		return $str;
 	}
@@ -355,3 +388,4 @@ class Number
 	}
 	
 }
+
