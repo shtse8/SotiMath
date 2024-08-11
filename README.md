@@ -1,15 +1,19 @@
-# PHP-Number
+Here’s an updated version of your project description with the **Soti** prefix:
 
-PHP-Number is a powerful library for arbitrary precision mathematics in PHP. It provides a simple and intuitive way to perform high-precision calculations, leveraging the BCMath extension and optionally the PECL Operator extension for enhanced performance.
+---
+
+# SotiNumber
+
+**SotiNumber** is a powerful PHP library for arbitrary precision mathematics. It provides a simple, optimal, and type-safe way to perform high-precision calculations, leveraging the BCMath extension and optionally the PECL Operator extension for enhanced performance.
 
 ## Features
 
-- Arbitrary precision arithmetic operations
-- Support for scientific notation
-- Seamless integration with PHP's native mathematical functions
-- Optional operator overloading for intuitive syntax (requires PECL Operator)
-- Comprehensive set of mathematical operations (addition, subtraction, multiplication, division, power, modulus, etc.)
-- Formatting options for human-readable output
+- **Arbitrary Precision Arithmetic**: Perform calculations with any desired level of precision.
+- **Support for Scientific Notation**: Seamlessly handle numbers in scientific format.
+- **Integration with PHP's Native Functions**: Easily use SotiNumber with PHP’s built-in mathematical functions.
+- **Optional Operator Overloading**: For intuitive and natural syntax using the PECL Operator extension.
+- **Comprehensive Mathematical Operations**: Includes addition, subtraction, multiplication, division, power, modulus, and more.
+- **Human-Readable Formatting Options**: Format numbers with thousands separators and custom decimal places.
 
 ## Requirements
 
@@ -24,7 +28,7 @@ PHP-Number is a powerful library for arbitrary precision mathematics in PHP. It 
 ### Via Composer
 
 ```bash
-composer require shtse8/Number
+composer require shtse8/SotiNumber
 ```
 
 ### Installing BCMath
@@ -65,10 +69,10 @@ Note: Adjust the PHP version in the paths if you're using a different version.
 ### Basic Usage
 
 ```php
-use shtse8\Number;
+use shtse8\SotiNumber;
 
-$num1 = new Number("1.8573958822565E+17");
-$num2 = new Number("111");
+$num1 = new SotiNumber("1.8573958822565E+17");
+$num2 = new SotiNumber("111");
 
 $result = $num1->add($num2)->pow($num2);
 echo $result->toString();
@@ -77,10 +81,10 @@ echo $result->toString();
 ### With Operator Overloading (requires PECL Operator)
 
 ```php
-use shtse8\Number;
+use shtse8\SotiNumber;
 
-$num1 = new Number("1.8573958822565E+17");
-$num2 = new Number("111");
+$num1 = new SotiNumber("1.8573958822565E+17");
+$num2 = new SotiNumber("111");
 
 $result = $num1 + $num2;
 $result **= $num2;
@@ -118,3 +122,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Thanks to the PHP team for the BCMath extension
 - Thanks to the PECL Operator team for enabling operator overloading in PHP
+
+---
+
+This update integrates the **Soti** prefix into your project description, reinforcing the values of simplicity, optimal performance, and type safety.
