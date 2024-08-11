@@ -1,6 +1,6 @@
 <?php
 
-class Number
+class SotiNumber
 {
     private const INTERNAL_SCALE = 20;
     private const ITERATIONS = 100;
