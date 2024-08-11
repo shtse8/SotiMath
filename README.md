@@ -1,7 +1,3 @@
-Here’s an updated version of your project description with the **Soti** prefix:
-
----
-
 # SotiNumber
 
 **SotiNumber** is a powerful PHP library for arbitrary precision mathematics. It provides a simple, optimal, and type-safe way to perform high-precision calculations, leveraging the BCMath extension and optionally the PECL Operator extension for enhanced performance.
